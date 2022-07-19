@@ -1,4 +1,5 @@
-﻿using Dalamud.Plugin;
+﻿using Dalamud.Logging;
+using Dalamud.Plugin;
 
 namespace Cuppyzh.DalamudPlugin.Diako
 {
@@ -8,6 +9,7 @@ namespace Cuppyzh.DalamudPlugin.Diako
 
         public Diako(DalamudPluginInterface dalamudPluginInterface)
         {
+            PluginLog.LogInformation("Diako-Starting");
             dalamudPluginInterface.Create<Services>();
             Services.Diako = this;
         }
