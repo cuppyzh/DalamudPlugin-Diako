@@ -15,7 +15,7 @@ using Dalamud.Plugin;
 
 namespace Cuppyzh.DalamudPlugin.Diako
 {
-    internal class Services
+    internal class PluginServices
     {
         public static Diako Diako;
 
