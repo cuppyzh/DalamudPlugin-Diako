@@ -1,0 +1,14 @@
+{
+    "Author": "Cuppyzh | Yusuf Anugrah Putra Aditama",
+    "Name": "Diako",
+    "InternalName": "diako",
+    "AssemblyVersion": "1.0.0",
+    "Description": "Private Dalamud Plugins to bridge ingame chat into Discord Server",
+    "ApplicableVersion": "any",
+    "DalamudApiLevel": 6,
+    "LoadPriority": 0,
+    "ImageUrls": [
+    ],
+    "IconUrl": "https://github.com/goaaats/dalamud-owo/raw/master/images/icon.png",
+    "Punchline": "Where is Nox?"
+}
