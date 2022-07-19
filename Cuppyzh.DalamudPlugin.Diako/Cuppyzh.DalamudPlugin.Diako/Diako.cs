@@ -6,6 +6,11 @@ namespace Cuppyzh.DalamudPlugin.Diako
     {
         public string Name => "Diako";
 
+        public Diako(DalamudPluginInterface dalamudPluginInterface)
+        {
+            dalamudPluginInterface.Create<Services>();
+            Services.Diako = this;
+        }
         public void Dispose()
         {
 
