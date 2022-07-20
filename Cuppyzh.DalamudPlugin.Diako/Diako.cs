@@ -1,10 +1,14 @@
-﻿using Cuppyzh.DalamudPlugin.Diako.Models;
+﻿using System;
+using System.IO;
+using System.Reflection;
+using Cuppyzh.DalamudPlugin.Diako.Models;
 using Cuppyzh.DalamudPlugin.Diako.Services;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Logging;
 using Dalamud.Plugin;
 using Newtonsoft.Json;
+
 
 namespace Cuppyzh.DalamudPlugin.Diako
 {
@@ -13,35 +17,57 @@ namespace Cuppyzh.DalamudPlugin.Diako
         public string Name => "Diakos";
 
         private readonly IApiCallService _apiCallService = new ApiCallService();
+        private readonly DiakoConfiguration _configuration;
 
         public Diako(DalamudPluginInterface dalamudPluginInterface)
         {
             PluginLog.LogInformation("Diako is starting....");
 
+            // Load Config
+            try
+            {
+                string configFile = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), 
+                    "Cuppyzh.DalamudPlugin.Diako.config.json");
+
+                PluginLog.LogDebug($"Find config file with path: {configFile}");
+
+                using (StreamReader streamReader = new StreamReader(configFile))
+                {
+                    string json = streamReader.ReadToEnd();
+                    _configuration = JsonConvert.DeserializeObject<DiakoConfiguration>(json);
+                }
+            } catch(Exception ex)
+            {
+                PluginLog.LogError(ex.Message);
+                PluginLog.LogError(ex.StackTrace); 
+                Dispose();
+            }
 
             dalamudPluginInterface.Create<PluginServices>();
             PluginServices.Diako = this;
 
-            PluginServices.chatGui.ChatMessage += Chat_OnChatMessage;
+            PluginServices.chatGui.ChatMessage += ChatMessage;
         }
+
         public void Dispose()
         {
             PluginLog.LogInformation("Diako is shuting down....");
-            PluginServices.chatGui.ChatMessage -= Chat_OnChatMessage;
+            PluginServices.chatGui.ChatMessage -= ChatMessage;
         }
 
-        private void Chat_OnChatMessage(XivChatType type, uint senderId, ref SeString sender, ref SeString cmessage, ref bool isHandled)
+        private void ChatMessage(XivChatType type, uint senderId, ref SeString sender, ref SeString message, ref bool isHandled)
         {
-            PluginLog.LogInformation($"sender: {JsonConvert.SerializeObject(sender)}");
-            PluginLog.LogInformation($"cmessage: {JsonConvert.SerializeObject(cmessage)}");
-            //if (type != XivChatType.FreeCompany)
-            //{
-            //    return;
-            //}
+            if (type != XivChatType.Say)
+            {
+                return;
+            }
 
             _apiCallService.SendMessage(new SendMessageRequestModel()
             {
-
+                Sender = sender.TextValue,
+                Message = sender.TextValue,
+                ApplicationKey = _configuration.ApplicationKey,
+                SecretKey = _configuration.SecretKey,
             });
         }
     }
