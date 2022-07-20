@@ -4,6 +4,7 @@ using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Logging;
 using Dalamud.Plugin;
+using Newtonsoft.Json;
 
 namespace Cuppyzh.DalamudPlugin.Diako
 {
@@ -31,6 +32,8 @@ namespace Cuppyzh.DalamudPlugin.Diako
 
         private void Chat_OnChatMessage(XivChatType type, uint senderId, ref SeString sender, ref SeString cmessage, ref bool isHandled)
         {
+            PluginLog.LogInformation($"sender: {JsonConvert.SerializeObject(sender)}");
+            PluginLog.LogInformation($"cmessage: {JsonConvert.SerializeObject(cmessage)}");
             //if (type != XivChatType.FreeCompany)
             //{
             //    return;
