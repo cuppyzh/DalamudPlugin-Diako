@@ -17,7 +17,7 @@ namespace Cuppyzh.DalamudPlugin.Diako
         public string Name => "Diakos";
 
         private readonly IApiCallService _apiCallService = new ApiCallService();
-        private readonly DiakoConfiguration _configuration;
+        public static DiakoConfiguration Configuration;
 
         public Diako(DalamudPluginInterface dalamudPluginInterface)
         {
@@ -34,7 +34,7 @@ namespace Cuppyzh.DalamudPlugin.Diako
                 using (StreamReader streamReader = new StreamReader(configFile))
                 {
                     string json = streamReader.ReadToEnd();
-                    _configuration = JsonConvert.DeserializeObject<DiakoConfiguration>(json);
+                    Configuration = JsonConvert.DeserializeObject<DiakoConfiguration>(json);
                 }
             } catch(Exception ex)
             {
@@ -62,13 +62,7 @@ namespace Cuppyzh.DalamudPlugin.Diako
                 return;
             }
 
-            _apiCallService.SendMessage(new SendMessageRequestModel()
-            {
-                Sender = sender.TextValue,
-                Message = sender.TextValue,
-                ApplicationKey = _configuration.ApplicationKey,
-                SecretKey = _configuration.SecretKey,
-            });
+            _apiCallService.SendMessage(sender.TextValue, message.TextValue);
         }
     }
 }

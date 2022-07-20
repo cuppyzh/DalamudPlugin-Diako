@@ -10,9 +10,5 @@
     "ImageUrls": [
     ],
     "IconUrl": "https://github.com/goaaats/dalamud-owo/raw/master/images/icon.png",
-    "Punchline": "Where is Nox?",
-    "DiakoConfiguration": {
-        "ApplicationKey": "application-key-test",
-        "SecretKey": "secret-key-test"
-    }
+    "Punchline": "Where is Nox?"
 }

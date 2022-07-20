@@ -1,4 +1,5 @@
 {
+    "Endpoint": "http://hana/diako/send",
     "ApplicationKey": "application-key-test",
     "SecretKey": "secret-key-test"
 }

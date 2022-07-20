@@ -9,6 +9,6 @@ namespace Cuppyzh.DalamudPlugin.Diako.Services
 {
     public interface IApiCallService
     {
-        void SendMessage(SendMessageRequestModel request);
+        void SendMessage(string sender, string message);
     }
 }
