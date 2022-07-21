@@ -19,21 +19,18 @@ namespace Cuppyzh.DalamudPlugin.Diako.Services
             {
                 { "Sender", sender },
                 { "Message", message }
-            }; 
-            var content = new FormUrlEncodedContent(requestBody);
+            };
+            var json = JsonConvert.SerializeObject(requestBody);
+            var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
 
             HttpClient httpClient = new HttpClient();
-
-            httpClient.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
-
             httpClient.DefaultRequestHeaders.Add("application-key", Diako.Configuration.ApplicationKey);
             httpClient.DefaultRequestHeaders.Add("secret-key", Diako.Configuration.SecretKey);
 
             PluginLog.LogDebug($"Endpoint: {Diako.Configuration.Endpoint}");
             PluginLog.LogDebug($"Request Body: {JsonConvert.SerializeObject(requestBody)}");
 
-            HttpResponseMessage response = httpClient.PostAsync(Diako.Configuration.Endpoint, content).Result;
+            HttpResponseMessage response = httpClient.PostAsync(Diako.Configuration.Endpoint, stringContent).Result;
 
             if (response.IsSuccessStatusCode)
             {
