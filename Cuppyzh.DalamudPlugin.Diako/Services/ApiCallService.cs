@@ -13,24 +13,25 @@ namespace Cuppyzh.DalamudPlugin.Diako.Services
 {
     public class ApiCallService : IApiCallService
     {
-        public void SendMessage(string sender, string message)
+        public async Task SendMessage(string sender, string message)
         {
             var requestBody = new Dictionary<string, string>
             {
                 { "Sender", sender },
-                { "Message", message }
+                { "Message", message },
+                { "Timestamp", DateTime.UtcNow.ToString("yyyyMMddHHmmssffff")}
             };
             var json = JsonConvert.SerializeObject(requestBody);
             var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
 
-            HttpClient httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("application-key", Diako.Configuration.ApplicationKey);
-            httpClient.DefaultRequestHeaders.Add("secret-key", Diako.Configuration.SecretKey);
+            HttpClient httpClient = new HttpClient(); 
+            var byteArray = Encoding.ASCII.GetBytes($"{Diako.Configuration.BasicAuthUsername}:{Diako.Configuration.BasicAuthPassword}");
+            httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
 
             PluginLog.LogDebug($"Endpoint: {Diako.Configuration.Endpoint}");
             PluginLog.LogDebug($"Request Body: {JsonConvert.SerializeObject(requestBody)}");
 
-            HttpResponseMessage response = httpClient.PostAsync(Diako.Configuration.Endpoint, stringContent).Result;
+            HttpResponseMessage response = await Task.Run(() => httpClient.PostAsync(Diako.Configuration.Endpoint, stringContent).Result);
 
             if (response.IsSuccessStatusCode)
             {

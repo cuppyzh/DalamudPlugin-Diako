@@ -9,7 +9,7 @@ namespace Cuppyzh.DalamudPlugin.Diako.Models
     public class DiakoConfiguration
     {
         public string Endpoint { get; set; }
-        public string ApplicationKey { get; set; }
-        public string SecretKey { get; set; }
+        public string BasicAuthUsername { get; set; }
+        public string BasicAuthPassword { get; set; }
     }
 }
