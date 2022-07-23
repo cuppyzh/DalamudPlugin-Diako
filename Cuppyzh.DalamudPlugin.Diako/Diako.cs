@@ -57,7 +57,7 @@ namespace Cuppyzh.DalamudPlugin.Diako
 
         private void ChatMessage(XivChatType type, uint senderId, ref SeString sender, ref SeString message, ref bool isHandled)
         {
-            if (type != XivChatType.Say)
+            if (type != XivChatType.FreeCompany)
             {
                 return;
             }
