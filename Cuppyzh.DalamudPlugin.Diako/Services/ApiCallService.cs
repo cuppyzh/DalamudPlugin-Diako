@@ -19,7 +19,7 @@ namespace Cuppyzh.DalamudPlugin.Diako.Services
             {
                 { "Sender", sender },
                 { "Message", message },
-                { "Timestamp", DateTime.UtcNow.ToString("yyyyMMddHHmmssffff")}
+                { "Timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString()}
             };
             var json = JsonConvert.SerializeObject(requestBody);
             var stringContent = new StringContent(json, UnicodeEncoding.UTF8, "application/json");
