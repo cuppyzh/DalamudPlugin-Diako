@@ -1,0 +1,5 @@
+{
+    "Endpoint": "http://localhost:9008/api/diako/message",
+    "BasicAuthUsername": "",
+    "BasicAuthPassword": ""
+}

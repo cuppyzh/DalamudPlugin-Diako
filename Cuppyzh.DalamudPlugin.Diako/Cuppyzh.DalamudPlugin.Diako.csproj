@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <TargetFramework>net5-windows</TargetFramework>
+	  <TargetFramework>net5.0-windows</TargetFramework>
 	  <LangVersion>latest</LangVersion>
 	  <Nullable>enable</Nullable>
 	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -10,7 +10,16 @@
 	  <Platforms>AnyCPU</Platforms>
 	  <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
 	  <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	  <BaseOutputPath>bin\</BaseOutputPath>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="Dalamud">
@@ -34,6 +43,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Cuppyzh.DalamudPlugin.Diako.config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Cuppyzh.DalamudPlugin.Diako.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

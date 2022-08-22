@@ -7,11 +7,8 @@ using Cuppyzh.DalamudPlugin.Diako.Models;
 
 namespace Cuppyzh.DalamudPlugin.Diako.Services
 {
-    public class ApiCallService : IApiCallService
+    public interface IApiCallService
     {
-        public void SendMessage(SendMessageRequestModel request)
-        {
-
-        }
+        Task SendMessage(string sender, string message);
     }
 }
